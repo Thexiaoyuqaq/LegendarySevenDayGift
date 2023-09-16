@@ -1,0 +1,55 @@
+#插件数据储存配置
+store:
+  #sqlite / mysql
+  method: sqlite
+#数据库配置
+Mysql:
+  address: localhost
+  port: 3306
+  database: test
+  user: root
+  password: 123456
+#连接池
+HikariCP:
+  connectionTimeout: 30000
+  #连接超时时间 默认值：30000（30秒）
+  minimumIdle: 10
+  #最小空闲连接数
+  maximumPoolSize: 50
+  #池允许达到的最大大小，包括空闲和正在使用的连接
+
+#自动异步保存玩家数据 秒为单位
+#重启服务器才可生效
+auto-ansysave: 1000
+#奖励设置
+reward:
+  #天数
+  #[sound]ID 播放音效 https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+  #[message]xxx 发送消息
+  #[title]XX;xx 发送标题消息
+  #[broad]xx 发送全服通报
+  #[console]xx 后台执行命令
+  #[op]xx 以OP权限执行 （危险性高，慎用.）
+  #[player]xx 玩家执行命令
+  #玩家变量为 %player%
+  1:
+    - '[console]eco give %player% 100'
+  2:
+    - '[console]eco give %player% 100'
+  3:
+    - '[console]eco give %player% 100'
+  4:
+    - '[console]eco give %player% 100'
+  5:
+    - '[console]eco give %player% 100'
+#语言配置
+lang:
+  plugin: '&7[&e&l新手五日礼包&7] &f'
+  claim_already: '&3你已经领取过该礼包了..'
+  claim_success: '&a你成功领取了新手五日礼包的第 &b%day% &a日礼包.'
+  claim_cant: '&c当前无法领取该礼包'
+  # %day% 为礼包天数变量
+  claim_wait: '&a今天有个礼包待领取..'
+  # %day% 为礼包天数变量
+  claim_wait_title: '&3&l新手五日礼包;&e今日有个礼包待领取.'
+  reset: '&a你的五日礼包领取数据已被重置.'

@@ -1,0 +1,8 @@
+name: LegendarySevenDayGift
+version: '${project.version}'
+main: com.gyzer.sevendaygift.LegendarySevenDayGift
+api-version: '1.16'
+commands:
+  legendarysevendaygift:
+    aliases:
+      - lsg

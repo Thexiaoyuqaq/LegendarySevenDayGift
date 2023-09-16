@@ -1,0 +1,137 @@
+title: '&7新人五日礼 '
+# 打开GUI音效 https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+sound: '' 
+# GUI 尺寸
+size: 27
+# 变量
+placeholder:
+  claim_already: '&f[ &a你已经领取过该礼包 &f]'
+  claim_wait: '&f[ &e点击领取礼包 &f]'
+  claim_cant: '&f[ &c目前该礼包无法领取 &f]'
+# GUI物品
+# Fuction 列表
+#   null: 点击后不触发任何效果
+#   close: 点击后关闭GUI
+#   cmd: 点击后触发命令 （后台发出）
+#     示例:
+#      fuction:
+#        type: cmd
+#        value: 'spawn %player%'
+#   reward: 礼包
+#     示例:
+#       fuction:
+#         type: reward
+#         value: '5' - 表示为该礼包为第 5 天的礼包
+#         ...
+#         type: reward
+#         value: '7' - 表示为该礼包为第 7 天的礼包
+#         ...
+#         type: reward
+#         value: '8' - 表示为该礼包为第 8 天的礼包
+#         ...
+#         type: reward
+#         value: '14' - 表示为该礼包为第 14 天的礼包
+#       ...
+customItems:
+  #第一日礼包
+  #礼包奖励配置在 config 的 rewards 下添加
+  day1这个是ID可以随意取:
+    display: '&d第一日礼包'
+    material: CHEST
+    data: 0
+    model: 0
+    lore:
+    - ''
+    - '&b新人登入 &31 &b天大礼包.'
+    - '&c每日只可领取一次礼包'
+    - ''
+    - '&f礼包内容:'
+    - '&f - 游戏币 ×199'
+    - '&f - 点券 ×10'
+    - ''
+    - '%placeholder%'
+    slot: [11]
+    fuction:
+      type: reward
+      value: '1'
+      # 领取后 执行 config.yml 的 rewards.1
+  day2:
+    display: '&d第二日礼包'
+    material: CHEST
+    data: 0
+    model: 0
+    lore:
+    - ''
+    - '&b新人登入 &32 &b天大礼包.'
+    - '&c每日只可领取一次礼包'
+    - ''
+    - '&f礼包内容:'
+    - '&f - 游戏币 ×599'
+    - '&f - 点券 ×50'
+    - ''
+    - '%placeholder%'
+    slot: [12]
+    fuction:
+      type: reward
+      value: '2'
+      # 领取后 执行 config.yml 的 rewards.2
+  day3:
+    display: '&d第三日礼包'
+    material: CHEST
+    data: 0
+    model: 0
+    lore:
+    - ''
+    - '&b新人登入 &33 &b天大礼包.'
+    - '&c每日只可领取一次礼包'
+    - ''
+    - '&f礼包内容:'
+    - '&f - 游戏币 ×1199'
+    - '&f - 点券 ×250'
+    - ''
+    - '%placeholder%'
+    slot: [13]
+    fuction:
+      type: reward
+      value: '3'
+      # 领取后 执行 config.yml 的 rewards.3
+  day4:
+    display: '&d第四日礼包'
+    material: CHEST
+    data: 0
+    model: 0
+    lore:
+    - ''
+    - '&b新人登入 &34 &b天大礼包.'
+    - '&c每日只可领取一次礼包'
+    - ''
+    - '&f礼包内容:'
+    - '&f - 游戏币 ×52299'
+    - '&f - 点券 ×550'
+    - ''
+    - '%placeholder%'
+    slot: [14]
+    fuction:
+      type: reward
+      value: '4'
+      # 领取后 执行 config.yml 的 rewards.4
+  day5:
+    display: '&d第五日礼包'
+    material: CHEST
+    data: 0
+    model: 0
+    lore:
+    - ''
+    - '&b新人登入 &35 &b天大礼包.'
+    - '&c每日只可领取一次礼包'
+    - ''
+    - '&f礼包内容:'
+    - '&f - 游戏币 ×5599'
+    - '&f - 点券 ×5550'
+    - ''
+    - '%placeholder%'
+    slot: [15]
+    fuction:
+      type: reward
+      value: '5'
+      # 领取后 执行 config.yml 的 reward.5
