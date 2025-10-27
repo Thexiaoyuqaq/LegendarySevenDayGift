@@ -1,55 +1,108 @@
-#插件数据储存配置
+# 插件数据储存配置
 store:
-  #sqlite / mysql
+  # 存储方式: sqlite / mysql
   method: sqlite
-#数据库配置
+
+# MySQL 数据库配置
 Mysql:
   address: localhost
   port: 3306
-  database: test
+  database: minecraft
   user: root
-  password: 123456
-#连接池
-HikariCP:
-  connectionTimeout: 30000
-  #连接超时时间 默认值：30000（30秒）
-  minimumIdle: 10
-  #最小空闲连接数
-  maximumPoolSize: 50
-  #池允许达到的最大大小，包括空闲和正在使用的连接
+  password: password123
 
-#自动异步保存玩家数据 秒为单位
-#重启服务器才可生效
+# HikariCP 连接池配置
+HikariCP:
+  # 连接超时时间（毫秒）默认值：30000（30秒）
+  connectionTimeout: 30000
+  # 最小空闲连接数
+  minimumIdle: 10
+  # 最大连接池大小，包括空闲和正在使用的连接
+  maximumPoolSize: 50
+
+# 自动异步保存玩家数据（秒为单位）
+# 设置为 0 或负数则禁用自动保存
+# 重启服务器后生效
 auto-ansysave: 1000
-#奖励设置
+
+# 奖励配置
 reward:
-  #天数
-  #[sound]ID 播放音效 https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
-  #[message]xxx 发送消息
-  #[title]XX;xx 发送标题消息
-  #[broad]xx 发送全服通报
-  #[console]xx 后台执行命令
-  #[op]xx 以OP权限执行 （危险性高，慎用.）
-  #[player]xx 玩家执行命令
-  #玩家变量为 %player%
+  # 命令格式说明:
+  # [sound]ID           - 播放音效 https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+  # [message]xxx        - 发送消息给玩家
+  # [title]主标题;副标题  - 发送标题消息
+  # [broad]xxx          - 发送全服广播
+  # [console]xxx        - 控制台执行命令
+  # [op]xxx             - 以 OP 权限执行命令（危险，慎用）
+  # [player]xxx         - 玩家执行命令
+  #
+  # 变量说明:
+  # %player%            - 玩家名称
+
+  # 第一天奖励
   1:
-    - '[console]eco give %player% 100'
+    - '[console]eco give %player% 1000'
+    - '[message]<gradient:green:blue>恭喜你获得了 1000 金币！</gradient>'
+    - '[sound]ENTITY_PLAYER_LEVELUP'
+    - '[title]<gold><bold>第一天奖励</bold></gold>;<green>+1000 金币</green>'
+
+  # 第二天奖励
   2:
-    - '[console]eco give %player% 100'
+    - '[console]eco give %player% 2000'
+    - '[console]give %player% diamond 16'
+    - '[message]<gradient:aqua:blue>恭喜你获得了 2000 金币和 16 个钻石！</gradient>'
+    - '[sound]ENTITY_PLAYER_LEVELUP'
+
+  # 第三天奖励
   3:
-    - '[console]eco give %player% 100'
+    - '[console]eco give %player% 3000'
+    - '[console]give %player% diamond 32'
+    - '[message]<gradient:yellow:gold>恭喜你获得了 3000 金币和 32 个钻石！</gradient>'
+    - '[sound]ENTITY_PLAYER_LEVELUP'
+    - '[broad]<rainbow>玩家 %player% 领取了第三天奖励！</rainbow>'
+
+  # 第四天奖励
   4:
-    - '[console]eco give %player% 100'
+    - '[console]eco give %player% 5000'
+    - '[console]give %player% diamond 64'
+    - '[console]give %player% emerald 16'
+    - '[message]<gradient:green:lime>恭喜你获得了丰厚奖励！</gradient>'
+    - '[sound]UI_TOAST_CHALLENGE_COMPLETE'
+
+  # 第五天奖励（终极奖励）
   5:
-    - '[console]eco give %player% 100'
-#语言配置
+    - '[console]eco give %player% 10000'
+    - '[console]give %player% diamond_block 10'
+    - '[console]give %player% emerald_block 5'
+    - '[console]give %player% netherite_ingot 3'
+    - '[message]<gradient:gold:yellow><bold>恭喜你完成了七日礼包！</bold></gradient>'
+    - '[title]<rainbow><bold>完成七日礼包！</bold></rainbow>;<gold>感谢你的支持</gold>'
+    - '[sound]UI_TOAST_CHALLENGE_COMPLETE'
+    - '[broad]<gradient:red:gold><bold>玩家 %player% 完成了七日签到！</bold></gradient>'
+
+# 语言配置
 lang:
-  plugin: '&7[&e&l新手五日礼包&7] &f'
-  claim_already: '&3你已经领取过该礼包了..'
-  claim_success: '&a你成功领取了新手五日礼包的第 &b%day% &a日礼包.'
-  claim_cant: '&c当前无法领取该礼包'
+  # 插件前缀
+  plugin: '&7[&e&l七日礼包&7] &f'
+
+  # 已经领取过该礼包
+  claim_already: '<red>你已经领取过该礼包了..</red>'
+
+  # 成功领取礼包
   # %day% 为礼包天数变量
-  claim_wait: '&a今天有个礼包待领取..'
+  claim_success: '<green>你成功领取了第 <gold><bold>%day%</bold></gold> 天的礼包!</green>'
+
+  # 当前无法领取该礼包
+  claim_cant: '<red>当前无法领取该礼包</red>'
+
+  # 今天有礼包待领取
   # %day% 为礼包天数变量
-  claim_wait_title: '&3&l新手五日礼包;&e今日有个礼包待领取.'
-  reset: '&a你的五日礼包领取数据已被重置.'
+  claim_wait: '<green>今天有个礼包待领取，快来领取吧！</green>'
+
+  # 登录标题提示
+  # 格式: 主标题;副标题
+  # %day% 为礼包天数变量
+  claim_wait_title: '<gradient:gold:yellow><bold>七日礼包</bold></gradient>;<green>第 %day% 天奖励待领取</green>'
+
+  # 数据重置成功
+  reset: '<green>你的七日礼包数据已被重置</green>'

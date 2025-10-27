@@ -1,137 +1,178 @@
-title: '&7新人五日礼 '
-# 打开GUI音效 https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
-sound: '' 
-# GUI 尺寸
+# 菜单标题
+title: '<gradient:gold:yellow><bold>七日礼包</bold></gradient>'
+
+# 打开 GUI 音效
+# 音效列表: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+# 留空则不播放音效
+sound: 'UI_BUTTON_CLICK'
+
+# GUI 尺寸 (必须是 9 的倍数: 9, 18, 27, 36, 45, 54)
 size: 27
-# 变量
+
+# 状态占位符
 placeholder:
-  claim_already: '&f[ &a你已经领取过该礼包 &f]'
-  claim_wait: '&f[ &e点击领取礼包 &f]'
-  claim_cant: '&f[ &c目前该礼包无法领取 &f]'
-# GUI物品
-# Fuction 列表
-#   null: 点击后不触发任何效果
-#   close: 点击后关闭GUI
-#   cmd: 点击后触发命令 （后台发出）
-#     示例:
-#      fuction:
-#        type: cmd
-#        value: 'spawn %player%'
-#   reward: 礼包
-#     示例:
-#       fuction:
-#         type: reward
-#         value: '5' - 表示为该礼包为第 5 天的礼包
-#         ...
-#         type: reward
-#         value: '7' - 表示为该礼包为第 7 天的礼包
-#         ...
-#         type: reward
-#         value: '8' - 表示为该礼包为第 8 天的礼包
-#         ...
-#         type: reward
-#         value: '14' - 表示为该礼包为第 14 天的礼包
-#       ...
+  # 已经领取过
+  claim_already: '<gray>[ <green>✔ 已领取</green> ]</gray>'
+  
+  # 可以领取
+  claim_wait: '<yellow>[ <gold><bold>点击领取</bold></gold> ]</yellow>'
+  
+  # 无法领取
+  claim_cant: '<gray>[ <red>✘ 未解锁</red> ]</gray>'
+
+# GUI 物品配置
+# 功能类型 (fuction.type):
+#   null    - 点击后不触发任何效果
+#   close   - 点击后关闭GUI
+#   cmd     - 点击后执行控制台命令
+#   reward  - 礼包领取（需配合 value 设置天数）
+#
+# 特殊变量:
+#   %player%      - 玩家名称
+#   %placeholder% - 自动替换为状态占位符
+
 customItems:
-  #第一日礼包
-  #礼包奖励配置在 config 的 rewards 下添加
-  day1这个是ID可以随意取:
-    display: '&d第一日礼包'
+  
+  # 第一日礼包
+  day1:
+    display: '<gradient:aqua:blue><bold>第一日礼包</bold></gradient>'
     material: CHEST
     data: 0
     model: 0
     lore:
-    - ''
-    - '&b新人登入 &31 &b天大礼包.'
-    - '&c每日只可领取一次礼包'
-    - ''
-    - '&f礼包内容:'
-    - '&f - 游戏币 ×199'
-    - '&f - 点券 ×10'
-    - ''
-    - '%placeholder%'
-    slot: [11]
+      - ''
+      - '<white>新人登入 <aqua><bold>第 1 天</bold></aqua> 大礼包</white>'
+      - '<red>每日只可领取一次礼包</red>'
+      - ''
+      - '<gold>礼包内容:</gold>'
+      - '  <gray>▸</gray> <yellow>游戏币 <white>×1000</white></yellow>'
+      - '  <gray>▸</gray> <green>钻石 <white>×16</white></green>'
+      - ''
+      - '%placeholder%'
+    slot: [10]
     fuction:
       type: reward
       value: '1'
-      # 领取后 执行 config.yml 的 rewards.1
+
+  # 第二日礼包
   day2:
-    display: '&d第二日礼包'
+    display: '<gradient:green:lime><bold>第二日礼包</bold></gradient>'
     material: CHEST
     data: 0
     model: 0
     lore:
-    - ''
-    - '&b新人登入 &32 &b天大礼包.'
-    - '&c每日只可领取一次礼包'
-    - ''
-    - '&f礼包内容:'
-    - '&f - 游戏币 ×599'
-    - '&f - 点券 ×50'
-    - ''
-    - '%placeholder%'
-    slot: [12]
+      - ''
+      - '<white>新人登入 <green><bold>第 2 天</bold></green> 大礼包</white>'
+      - '<red>每日只可领取一次礼包</red>'
+      - ''
+      - '<gold>礼包内容:</gold>'
+      - '  <gray>▸</gray> <yellow>游戏币 <white>×2000</white></yellow>'
+      - '  <gray>▸</gray> <green>钻石 <white>×32</white></green>'
+      - ''
+      - '%placeholder%'
+    slot: [11]
     fuction:
       type: reward
       value: '2'
-      # 领取后 执行 config.yml 的 rewards.2
+
+  # 第三日礼包
   day3:
-    display: '&d第三日礼包'
+    display: '<gradient:yellow:gold><bold>第三日礼包</bold></gradient>'
     material: CHEST
     data: 0
     model: 0
     lore:
-    - ''
-    - '&b新人登入 &33 &b天大礼包.'
-    - '&c每日只可领取一次礼包'
-    - ''
-    - '&f礼包内容:'
-    - '&f - 游戏币 ×1199'
-    - '&f - 点券 ×250'
-    - ''
-    - '%placeholder%'
-    slot: [13]
+      - ''
+      - '<white>新人登入 <yellow><bold>第 3 天</bold></yellow> 大礼包</white>'
+      - '<red>每日只可领取一次礼包</red>'
+      - ''
+      - '<gold>礼包内容:</gold>'
+      - '  <gray>▸</gray> <yellow>游戏币 <white>×3000</white></yellow>'
+      - '  <gray>▸</gray> <green>钻石 <white>×48</white></green>'
+      - '  <gray>▸</gray> <aqua>绿宝石 <white>×8</white></aqua>'
+      - ''
+      - '%placeholder%'
+    slot: [12]
     fuction:
       type: reward
       value: '3'
-      # 领取后 执行 config.yml 的 rewards.3
+
+  # 第四日礼包
   day4:
-    display: '&d第四日礼包'
-    material: CHEST
+    display: '<gradient:gold:orange><bold>第四日礼包</bold></gradient>'
+    material: ENDER_CHEST
     data: 0
     model: 0
     lore:
-    - ''
-    - '&b新人登入 &34 &b天大礼包.'
-    - '&c每日只可领取一次礼包'
-    - ''
-    - '&f礼包内容:'
-    - '&f - 游戏币 ×52299'
-    - '&f - 点券 ×550'
-    - ''
-    - '%placeholder%'
-    slot: [14]
+      - ''
+      - '<white>新人登入 <gold><bold>第 4 天</bold></gold> 大礼包</white>'
+      - '<red>每日只可领取一次礼包</red>'
+      - ''
+      - '<gold>礼包内容:</gold>'
+      - '  <gray>▸</gray> <yellow>游戏币 <white>×5000</white></yellow>'
+      - '  <gray>▸</gray> <green>钻石 <white>×64</white></green>'
+      - '  <gray>▸</gray> <aqua>绿宝石 <white>×16</white></aqua>'
+      - ''
+      - '%placeholder%'
+    slot: [13]
     fuction:
       type: reward
       value: '4'
-      # 领取后 执行 config.yml 的 rewards.4
+
+  # 第五日礼包 (终极奖励)
   day5:
-    display: '&d第五日礼包'
-    material: CHEST
+    display: '<rainbow><bold>第五日终极礼包</bold></rainbow>'
+    material: ENDER_CHEST
     data: 0
     model: 0
     lore:
-    - ''
-    - '&b新人登入 &35 &b天大礼包.'
-    - '&c每日只可领取一次礼包'
-    - ''
-    - '&f礼包内容:'
-    - '&f - 游戏币 ×5599'
-    - '&f - 点券 ×5550'
-    - ''
-    - '%placeholder%'
-    slot: [15]
+      - ''
+      - '<white>新人登入 <gradient:red:gold><bold>第 5 天</bold></gradient> 终极大礼包</white>'
+      - '<red>每日只可领取一次礼包</red>'
+      - ''
+      - '<gold><bold>礼包内容:</bold></gold>'
+      - '  <gray>▸</gray> <yellow>游戏币 <white>×10000</white></yellow>'
+      - '  <gray>▸</gray> <aqua>钻石块 <white>×10</white></aqua>'
+      - '  <gray>▸</gray> <green>绿宝石块 <white>×5</white></green>'
+      - '  <gray>▸</gray> <dark_purple>下界合金 <white>×3</white></dark_purple>'
+      - ''
+      - '<rainbow>完成七日签到，获得丰厚奖励！</rainbow>'
+      - ''
+      - '%placeholder%'
+    slot: [14]
     fuction:
       type: reward
       value: '5'
-      # 领取后 执行 config.yml 的 reward.5
+
+  # 装饰物品 - 背景玻璃
+  background:
+    display: ' '
+    material: GRAY_STAINED_GLASS_PANE
+    data: 0
+    model: 0
+    lore: []
+    slot: [0,1,2,3,4,5,6,7,8,9,15,16,17,18,19,20,21,22,23,24,25,26]
+    fuction:
+      type: null
+      value: ''
+
+  # 信息物品
+  info:
+    display: '<gradient:aqua:blue><bold>签到说明</bold></gradient>'
+    material: BOOK
+    data: 0
+    model: 0
+    lore:
+      - ''
+      - '<gray>欢迎来到服务器！</gray>'
+      - ''
+      - '<yellow>规则说明:</yellow>'
+      - '  <white>• 每天登录可领取一次奖励</white>'
+      - '  <white>• 连续登录奖励更丰厚</white>'
+      - '  <white>• 完成五天签到获得终极奖励</white>'
+      - ''
+      - '<green>祝你游戏愉快！</green>'
+    slot: [16]
+    fuction:
+      type: null
+      value: ''

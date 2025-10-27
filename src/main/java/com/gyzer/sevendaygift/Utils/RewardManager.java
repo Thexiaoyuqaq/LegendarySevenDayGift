@@ -1,7 +1,6 @@
 package com.gyzer.sevendaygift.Utils;
 
 import com.gyzer.sevendaygift.LegendarySevenDayGift;
-import org.apache.commons.lang.text.StrBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,99 +14,121 @@ import java.util.List;
 public class RewardManager {
 
     private HashMap<Integer, List<String>> rewards;
+
     public RewardManager(){
         rewards = new HashMap<>();
-        FileConfiguration yml= LegendarySevenDayGift.getInstance().getConfig();
-        ConfigurationSection section=yml.getConfigurationSection("reward");
+        FileConfiguration yml = LegendarySevenDayGift.getInstance().getConfig();
+        ConfigurationSection section = yml.getConfigurationSection("reward");
         if (section != null){
-            for (String day:section.getKeys(false)){
-                rewards.put(Integer.parseInt(day) , yml.getStringList("reward."+day));
+            for (String day : section.getKeys(false)){
+                rewards.put(Integer.parseInt(day), yml.getStringList("reward." + day));
             }
         }
     }
 
     public List<String> getReward(int day){
-        return  rewards.containsKey(day) ? rewards.get(day) : new ArrayList<>();
+        return rewards.containsKey(day) ? rewards.get(day) : new ArrayList<>();
     }
 
-    public void run(Player p,List<String> reward){
-        for (String cmd:reward){
+    public void run(Player p, List<String> reward){
+        for (String cmd : reward){
+            // 提取标识标签
+            String tag = extractTag(cmd);
 
-            //获取标识
-            StrBuilder tag=new StrBuilder();
-            char[] chars=cmd.toCharArray();
-            boolean begin=false;
-            for (int i=0;i < chars.length; i++){
-                if (chars[i] == '[' && i ==0){
-                    begin=true;
-                    continue;
-                }
-                else if (chars[i] == ']'){
-                    break;
-                }
-                else {
-                    if (begin){
-                        tag.append(chars[i]);
-                    }
-                }
-            }
+            // 处理命令内容
+            String deal = cmd.substring(cmd.indexOf(']') + 1)
+                    .replace("%player%", p.getName());
 
-            String deal=cmd.replace("["+tag+"]","").replace("%player%",p.getName());
-            switch (tag.toString()){
-                case "message":
-                    p.sendMessage(MsgUtils.color(deal));
-                    break;
-                case "title":
-                    String[] title=new String[2];
-                    if (deal.contains(";")){
-                        title[0]=MsgUtils.color(deal.split(";")[0]);
-                        title[1]=MsgUtils.color(deal.split(";")[1]);
-                    }else {
-                        title[0]=MsgUtils.color(deal);
-                        title[1]="";
-                    }
-                    p.sendTitle(title[0],title[1]);
-                    break;
-                case "sound":
-                    if (getSound(deal)!=null) {
-                        p.playSound(p.getLocation(), Sound.valueOf(deal.toUpperCase()), 1, 1);
-                        break;
-                    }
-                    break;
-                case "console":
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),deal);
-                    break;
-                case "player":
-                    p.performCommand(deal);
-                    break;
-                case "op":
-                    if (p.isOp()){
-                        p.performCommand(deal);
-                    }
-                    else {
+            // 执行对应的命令类型
+            executeCommand(p, tag, deal);
+        }
+    }
+
+    /**
+     * 从命令字符串中提取标签
+     * 例如: "[message]Hello" -> "message"
+     */
+    private String extractTag(String cmd){
+        if (cmd.startsWith("[") && cmd.contains("]")){
+            return cmd.substring(1, cmd.indexOf(']'));
+        }
+        return "";
+    }
+
+    /**
+     * 根据标签类型执行对应的命令
+     */
+    private void executeCommand(Player p, String tag, String deal){
+        switch (tag){
+            case "message":
+                p.sendMessage(MsgUtils.color(deal));
+                break;
+
+            case "title":
+                String[] title = new String[2];
+                if (deal.contains(";")){
+                    String[] parts = deal.split(";", 2);
+                    title[0] = MsgUtils.color(parts[0]);
+                    title[1] = MsgUtils.color(parts[1]);
+                } else {
+                    title[0] = MsgUtils.color(deal);
+                    title[1] = "";
+                }
+                p.sendTitle(title[0], title[1]);
+                break;
+
+            case "sound":
+                Sound sound = getSound(deal);
+                if (sound != null) {
+                    p.playSound(p.getLocation(), sound, 1.0f, 1.0f);
+                }
+                break;
+
+            case "console":
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), deal);
+                break;
+
+            case "player":
+                p.performCommand(deal);
+                break;
+
+            case "op":
+                boolean wasOp = p.isOp();
+                try {
+                    if (!wasOp) {
                         p.setOp(true);
-                        p.performCommand(deal);
+                    }
+                    p.performCommand(deal);
+                } finally {
+                    if (!wasOp) {
                         p.setOp(false);
                     }
-                    break;
-                case "broad":
-                    Bukkit.broadcastMessage(deal);
-                    break;
-            }
+                }
+                break;
+
+            case "broad":
+                Bukkit.broadcastMessage(MsgUtils.color(deal));
+                break;
         }
     }
 
-    private Sound getSound(String sound){
-        Sound s=null;
+    /**
+     * 安全地获取Sound枚举
+     */
+    private Sound getSound(String soundName){
         try {
-            s=Sound.valueOf(sound);
-        }catch (Exception e){
-            System.out.println("音效ID出错！");
+            return Sound.valueOf(soundName.toUpperCase());
+        } catch (IllegalArgumentException e){
+            Bukkit.getLogger().warning("无效的音效ID: " + soundName);
+            return null;
         }
-        return s;
     }
+
+    /**
+     * 检查当天是否有奖励
+     */
     public boolean checkTodayHasReward(int day){
-        for (int tar:LegendarySevenDayGift.getInstance().getRead().days){
+        for (int tar : LegendarySevenDayGift.getInstance().getRead().days){
             if (tar == day){
                 return true;
             }
